@@ -12,7 +12,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  birthDate: Date | string;
+  birthDate: Array<number>;
   address: Array<UserAddress>;
-  type: Roles;
+  type: Array<Roles>;
 }

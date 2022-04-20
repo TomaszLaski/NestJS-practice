@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './interfaces/product.interface';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ExternalProductDto } from './dto/external-product.dto';
-import { dateToArray } from 'src/shared/helpers/date.helper';
 var shortid = require('shortid');
 
 @Injectable()
@@ -26,7 +24,7 @@ export class ProductsDataService {
     }
   }
 
-  updateProduct(id: string, dto: UpdateProductDto): ExternalProductDto {
+  updateProduct(id: string, dto: UpdateProductDto): Product {
     this.products = this.products.map((i) => {
       if (i.id === id) {
         return {
@@ -43,15 +41,11 @@ export class ProductsDataService {
     return this.getProductById(id);
   }
 
-  getProductById(id: string): ExternalProductDto {
+  getProductById(id: string): Product {
     let itemFound = this.products.find((item) => {
       if (item.id === id) return true;
     });
-    return {
-      ...itemFound,
-      createdAt: dateToArray(itemFound.createdAt),
-      updatedAt: dateToArray(itemFound.createdAt),
-    };
+    return itemFound;
   }
 
   getAllProducts(): Array<Product> {
