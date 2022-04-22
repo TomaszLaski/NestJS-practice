@@ -8,12 +8,11 @@ import {
   HttpCode,
   Put,
 } from '@nestjs/common';
-import { arrayToDate, dateToArray } from 'src/shared/helpers/date.helper';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ExternalUserDto } from './dto/external-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './interfaces/users.interface';
 import { UsersDataService } from './users-data.service';
+import { mapUserToExternal } from './helpers/map-user-to-external.helper';
 
 @Controller('users')
 export class UsersController {
@@ -21,24 +20,19 @@ export class UsersController {
 
   @Post()
   addUser(@Body() item: CreateUserDto): ExternalUserDto {
-    return this.mapUserToExternal(this.userRepository.addUser(item));
-  }
-
-  mapUserToExternal(user: User): ExternalUserDto {
-    return {
-      ...user,
-      birthDate: arrayToDate(user.birthDate),
-    };
+    return mapUserToExternal(this.userRepository.addUser(item));
   }
 
   @Get(':id')
   getUserById(@Param('id') id): ExternalUserDto {
-    return this.mapUserToExternal(this.userRepository.getUserById(id));
+    return mapUserToExternal(this.userRepository.getUserById(id));
   }
 
   @Get()
-  getAllUser(): Array<User> {
-    return this.userRepository.getAllUsers();
+  getAllUser(): Array<ExternalUserDto> {
+    return this.userRepository
+      .getAllUsers()
+      .map((item) => mapUserToExternal(item));
   }
 
   @Delete(':id')
@@ -48,7 +42,7 @@ export class UsersController {
   }
 
   @Put(':id')
-  updateUser(@Param('id') id, @Body() dto: UpdateUserDto): UpdateUserDto {
-    return this.userRepository.updateUser(id, dto);
+  updateUser(@Param('id') id, @Body() dto: UpdateUserDto): ExternalUserDto {
+    return mapUserToExternal(this.userRepository.updateUser(id, dto));
   }
 }

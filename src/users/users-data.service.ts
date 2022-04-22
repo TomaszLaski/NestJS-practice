@@ -15,8 +15,7 @@ export class UsersDataService {
   }
 
   deleteUser(id: string): void {
-    const deletedItem = this.getUserById(id);
-    const index = this.users.indexOf(deletedItem);
+    const index = this.users.findIndex((item) => id === item.id);
     if (index > -1) {
       this.users.splice(index, 1);
     }
