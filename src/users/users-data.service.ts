@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './interfaces/users.interface';
 import { UpdateUserDto } from './dto/update-user.dto';
-var shortid = require('shortid');
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class UsersDataService {
   private users: Array<User> = [];
 
   addUser(newUser: CreateUserDto): User {
-    newUser.id = shortid.generate();
+    newUser.id = uuidv4();
     this.users.push(newUser);
     return newUser;
   }

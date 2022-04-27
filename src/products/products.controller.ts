@@ -7,6 +7,7 @@ import {
   Delete,
   HttpCode,
   Put,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { dateToArray } from 'src/shared/helpers/date.helper';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -33,7 +34,9 @@ export class ProductsController {
   }
 
   @Get(':id')
-  getProductById(@Param('id') id): ExternalProductDto {
+  getProductById(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ): ExternalProductDto {
     return this.mapProductToExternal(this.productRepository.getProductById(id));
   }
 
@@ -50,9 +53,11 @@ export class ProductsController {
 
   @Put(':id')
   updateProduct(
-    @Param('id') id,
-    @Body() dto: UpdateProductDto,
-  ): UpdateProductDto {
-    return this.productRepository.updateProduct(id, dto);
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+    @Body() product: UpdateProductDto,
+  ): ExternalProductDto {
+    return this.mapProductToExternal(
+      this.productRepository.updateProduct(id, product),
+    );
   }
 }

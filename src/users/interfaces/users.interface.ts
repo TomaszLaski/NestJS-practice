@@ -4,15 +4,15 @@ interface UserAddress {
   country: string;
   city: string;
   street: string;
-  streetNumber: number;
-  flatNumber?: number;
+  number: number;
 }
 
 export interface User {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  birthDate: Array<number>;
-  address: Array<UserAddress>;
-  type: Array<Roles>;
+  dateOfBirth: Array<number>;
+  address?: Array<UserAddress>;
+  roles: Roles;
 }

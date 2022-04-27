@@ -3,9 +3,10 @@ import { UserAddress } from './address-user.dto';
 
 export interface ExternalUserDto {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  birthDate: Date;
-  type: Array<Roles>;
-  address: Array<UserAddress>;
+  dateOfBirth: Date;
+  address?: Array<UserAddress>;
+  roles: Roles;
 }

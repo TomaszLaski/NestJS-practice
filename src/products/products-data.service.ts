@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './interfaces/product.interface';
 import { UpdateProductDto } from './dto/update-product.dto';
-var shortid = require('shortid');
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ProductsDataService {
   private products: Array<Product> = [];
 
   addProduct(newProduct: CreateProductDto): Product {
-    newProduct.id = shortid.generate();
+    newProduct.id = uuidv4();
     newProduct.createdAt = new Date();
     newProduct.updatedAt = new Date();
     this.products.push(newProduct);
