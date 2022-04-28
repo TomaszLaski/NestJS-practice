@@ -44,6 +44,13 @@ export class UsersDataService {
     return itemFound;
   }
 
+  getUserByEmail(email: string): User {
+    let emailFound = this.users.find((emailFound) => {
+      if (emailFound.id === email) return true;
+    });
+    return emailFound;
+  }
+
   getAllUsers(): Array<User> {
     return this.users;
   }

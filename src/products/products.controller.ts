@@ -8,7 +8,9 @@ import {
   HttpCode,
   Put,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
+import { RoleGuard } from 'src/shared/guards/role.guard';
 import { dateToArray } from 'src/shared/helpers/date.helper';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ExternalProductDto } from './dto/external-product.dto';
@@ -21,6 +23,7 @@ export class ProductsController {
   constructor(private productRepository: ProductsDataService) {}
 
   @Post()
+  // @UseGuards(RoleGuard)
   addProduct(@Body() item: CreateProductDto): ExternalProductDto {
     return this.mapProductToExternal(this.productRepository.addProduct(item));
   }

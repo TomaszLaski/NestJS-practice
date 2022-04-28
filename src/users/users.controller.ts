@@ -31,6 +31,11 @@ export class UsersController {
     return mapUserToExternal(this.userRepository.getUserById(id));
   }
 
+  @Get('email')
+  getUserByEmail(@Param('email') email: string): ExternalUserDto {
+    return this.userRepository.getUserByEmail(email);
+  }
+
   @Get()
   getAllUser(): Array<ExternalUserDto> {
     return this.userRepository

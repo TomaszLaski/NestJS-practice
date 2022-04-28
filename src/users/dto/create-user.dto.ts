@@ -1,4 +1,4 @@
-import { Roles } from '../../enums/roles.enum';
+import { Roles } from '../../shared/enums/roles.enum';
 import { Transform, Type } from 'class-transformer';
 import { arrayToDate } from '../../shared/helpers/date.helper';
 import {
@@ -7,7 +7,6 @@ import {
   ValidateNested,
   IsNumber,
   IsEnum,
-  IsDate,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -20,11 +19,6 @@ export class CreateUserDto {
   @IsNotEmpty()
   email: string;
 
-  // @IsDate()
-  // @IsNotEmpty()
-  // dateOfBirth: Array<number>;
-
-  // kod z kodilli, niestety nie działa, pojawia się błąd, do konsultacji co jest powodem
   @Transform((d) => arrayToDate(d))
   dateOfBirth: Date;
 
